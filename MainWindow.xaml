@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Wholesaler"
         mc:Ignorable="d"
         Title="Hurtownia" WindowStartupLocation="CenterScreen" WindowState="Maximized"
-        MinHeight="400" MinWidth="800">
+        MinHeight="600" MinWidth="900">
     <Grid>
         <DockPanel>
             <Menu>
@@ -23,21 +23,64 @@
             <TabItem Header="Szukaj">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="7*"/>
-                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="68*"/>
+                        <ColumnDefinition Width="557*"/>
+                        <ColumnDefinition Width="268*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Margin="15">
-                        <DataGrid Name="dgSimple"></DataGrid>
+                    <StackPanel Margin="15,15,15,15" Grid.ColumnSpan="2">
+                        <DataGrid Name="searchDataGrid"></DataGrid>
                     </StackPanel>
-                    <TextBox Grid.Column="1"  Margin="0,50,0,0" TextWrapping="Wrap" Width="250" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Text="Szukaj" Foreground="Gray" />
-                    <Viewbox Grid.Column="1" Height="20" HorizontalAlignment="Left" Margin="0,15,0,0" VerticalAlignment="Top">
+                    <TextBox Grid.Column="2"  Margin="0,50,0,0" TextWrapping="Wrap" Width="250" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Text="Szukaj" Foreground="Gray" />
+                    <Viewbox Grid.Column="2" Height="20" HorizontalAlignment="Left" Margin="0,15,0,0" VerticalAlignment="Top">
                         <TextBlock Text="Szukaj:" />
                     </Viewbox>
                 </Grid>
             </TabItem>
             <TabItem Header="Sprzedaż">
                 <Grid>
-                   
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Margin="5" Grid.Column="0">
+                        <DataGrid Name="saleDataGrid"></DataGrid>
+                    </StackPanel>
+                    
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="3*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <WrapPanel>
+                                <Viewbox  HorizontalAlignment="Left" Height="20"  Margin="5,15,0,0" >
+                                    <TextBlock Text="Szukaj:" />
+                                </Viewbox>
+                                <TextBox Margin="5,15,0,0" TextWrapping="Wrap" Width="250" Height="20"  Text="Szukaj" Foreground="Gray" />
+                            </WrapPanel>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <WrapPanel Grid.Column="1" Grid.Row="1">
+                                <Button Content="Dodaj do koszyka" Margin="5,15,0,0" Height="50" Width="250"/>
+                                <Button Content="Usuń z listy zakupów" Margin="5,15,0,0" Height="50" Width="250" />
+                                <Button Content="Zapłać" Margin="5,15,0,0" Height="50" Width="250" />
+                            </WrapPanel>
+                        </Grid>
+                        <Grid Grid.Column="1" Grid.Row="2">
+                            <ListView  Name="orderListView" Margin="5,15,0,0" VerticalAlignment="Top">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn  Width="50" Header="Ilość"/>
+                                        <GridViewColumn  Width="100" Header="Miara"/>
+                                        <GridViewColumn  Width="Auto" Header="Opis"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Grid>
+                    </Grid>
+                    
                 </Grid>
             </TabItem>
             <TabItem Header="Zarządzaj materiałami">
