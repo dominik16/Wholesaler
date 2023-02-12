@@ -24,41 +24,47 @@ namespace Wholesaler.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<Product>> GetSingleProduct(int id)
+        public async Task<IActionResult> GetSingleProduct(int id)
         {
-            var result = await _productService.GetSingleProduct(id);
-            if (result is null)
-                return NotFound("Sorry, but this product doesn't exist");
-            return Ok(result);
+            if (!await _productService.CheckProductExists(id))
+            {
+                return NotFound($"Product with id {id} does not exist");
+            }
+
+            return Ok(await _productService.GetSingleProduct(id));
         }
 
         [HttpPost] 
-        public async Task<ActionResult<List<Product>>> AddProduct(Product product)
+        public async Task<IActionResult> AddProduct(Product product)
         {
-            var result = await _productService.AddProduct(product);
-            return Ok(result);
+            await _productService.AddProduct(product);
+            return Ok();
         }
 
         [HttpPut]
         [Route("{id}")]
         public async Task<ActionResult<Product>> UpdateProduct(int id, Product request)
         {
-            var result = await _productService.UpdateProduct(id, request);
-            if (result is null)
-                return NotFound("Sorry, but this product doesn't exist");
+            if (!await _productService.CheckProductExists(id))
+            {
+                return NotFound($"Product with id {id} does not exist");
+            }
 
-            return Ok(result);
+            await _productService.UpdateProduct(id, request);
+            return Ok();
         }
 
         [HttpDelete]
         [Route("{id}")]
         public async Task<ActionResult<Product>> DeleteProduct(int id)
         {
-            var result = await _productService.DeleteProduct(id);
-            if (result is null)
-                return NotFound("Sorry, but this product doesn't exist");
-            
-            return Ok(result);
+            if (!await _productService.CheckProductExists(id))
+            {
+                return NotFound($"Product with id {id} does not exist");
+            }
+
+            await _productService.DeleteProduct(id);
+            return Ok();
         }
     }
 }

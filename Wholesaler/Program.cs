@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Wholesaler.Data;
 using Wholesaler.Services;
 
@@ -11,7 +12,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddDbContext<DataContext>();
+builder.Services.AddScoped<IStorageService, StorageService>();
+builder.Services.AddDbContext<DataContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 var app = builder.Build();
 

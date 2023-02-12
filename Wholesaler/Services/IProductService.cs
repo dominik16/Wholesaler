@@ -6,8 +6,9 @@ namespace Wholesaler.Services
     {
         Task<List<Product>> GetAllProducts();
         Task<Product?> GetSingleProduct(int id);
-        Task<List<Product>> AddProduct(Product product);
-        Task<List<Product>?> UpdateProduct(int id, Product product);
-        Task<List<Product>?> DeleteProduct(int id);
+        Task AddProduct(Product product);
+        Task UpdateProduct(int id, Product product);
+        Task DeleteProduct(int id);
+        Task<bool> CheckProductExists(int id);
     }
 }

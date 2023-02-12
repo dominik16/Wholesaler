@@ -454,3 +454,6 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 
 .vscode/
+
+#Docker Image Database datas
+WholesalerDb/postgres-data
