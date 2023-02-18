@@ -1,4 +1,5 @@
-﻿using Wholesaler.Models;
+﻿using Wholesaler.DataTransferObject;
+using Wholesaler.Models;
 
 namespace Wholesaler.Services
 {
@@ -6,7 +7,7 @@ namespace Wholesaler.Services
     {
         Task<List<Product>> GetAllProducts();
         Task<Product?> GetSingleProduct(int id);
-        Task AddProduct(Product product);
+        Task AddProduct(CreateProductDto product);
         Task UpdateProduct(int id, Product product);
         Task DeleteProduct(int id);
         Task<bool> CheckProductExists(int id);

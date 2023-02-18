@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Wholesaler.DataTransferObject;
 using Wholesaler.Models;
 using Wholesaler.Services;
 
@@ -34,7 +35,7 @@ namespace Wholesaler.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddStorage(Storage storage)
+        public async Task<IActionResult> AddStorage(CreateStorageDto storage)
         {
             await _service.AddStorage(storage);
             return Ok();

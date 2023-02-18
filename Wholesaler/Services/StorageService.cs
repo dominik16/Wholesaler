@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Wholesaler.Data;
+using Wholesaler.DataTransferObject;
 using Wholesaler.Models;
 
 namespace Wholesaler.Services
@@ -7,15 +9,18 @@ namespace Wholesaler.Services
     public class StorageService : IStorageService
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public StorageService(DataContext context)
+        public StorageService(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public async Task AddStorage(Storage storage)
+        public async Task AddStorage(CreateStorageDto storage)
         {
-            _context.Storages.Add(storage);
+            var storageDto = _mapper.Map<Storage>(storage);
+            _context.Storages.Add(storageDto);
             await _context.SaveChangesAsync();
         }
 

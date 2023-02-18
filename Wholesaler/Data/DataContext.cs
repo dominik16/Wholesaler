@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 using Wholesaler.Models;
 
 namespace Wholesaler.Data
@@ -21,10 +22,16 @@ namespace Wholesaler.Data
             );
 
             modelBuilder.Entity<Storage>().HasData(
-             new Storage { Id = 1, Name = "Magazyn Wewnętrzny", Address = "Graniczna 12", City = "Kraków", Type = "Detaliczny"},
-             new Storage { Id = 2, Name = "Magazyn Zewnętrzny Zadaszony", Address = "Wesoła 46", City = "Rzeszów", Type = "Hurtowy"},
-             new Storage { Id = 3, Name = "Magazyn Niezadaszony", Address = "Słoneczna 2", City = "Gdańsk", Type = "Hurtowy"}
+             new Storage { Id = 1, Name = "Magazyn Wewnętrzny", Address = "Graniczna 12", City = "Kraków", Type = "Detaliczny" },
+             new Storage { Id = 2, Name = "Magazyn Zewnętrzny Zadaszony", Address = "Wesoła 46", City = "Rzeszów", Type = "Hurtowy" },
+             new Storage { Id = 3, Name = "Magazyn Niezadaszony", Address = "Słoneczna 2", City = "Gdańsk", Type = "Hurtowy" }
             );
+
+            modelBuilder.Entity<Product>()
+            .HasKey(p => p.Id);
+
+            modelBuilder.Entity<Storage>()
+            .HasKey(st => st.Id);
         }
 
         public DbSet<Product> Products { get; set; }

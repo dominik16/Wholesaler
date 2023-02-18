@@ -1,16 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using Wholesaler.Models;
 
-namespace Wholesaler.Models
+namespace Wholesaler.DataTransferObject
 {
-    public class Product
+    public class CreateProductDto
     {
-        public int Id { get; set; } 
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Unit { get; set; } = string.Empty;
         public double Price { get; set; }
-        public Storage? Storage { get; set; }
+
         public int StorageId { get; set; }
     }
 }

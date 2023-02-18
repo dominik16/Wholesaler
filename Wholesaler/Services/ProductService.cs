@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Wholesaler.Data;
+using Wholesaler.DataTransferObject;
 using Wholesaler.Models;
 
 namespace Wholesaler.Services
@@ -7,15 +9,18 @@ namespace Wholesaler.Services
     public class ProductService : IProductService
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public ProductService(DataContext context)
+        public ProductService(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public async Task AddProduct(Product product)
+        public async Task AddProduct(CreateProductDto product)
         {
-            _context.Products.Add(product);
+            var productDto = _mapper.Map<Product>(product);
+            _context.Products.Add(productDto);
             await _context.SaveChangesAsync();
         }
 

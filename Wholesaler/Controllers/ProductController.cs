@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Wholesaler.DataTransferObject;
 using Wholesaler.Models;
 using Wholesaler.Services;
 
@@ -35,7 +36,7 @@ namespace Wholesaler.Controllers
         }
 
         [HttpPost] 
-        public async Task<IActionResult> AddProduct(Product product)
+        public async Task<IActionResult> AddProduct(CreateProductDto product)
         {
             await _productService.AddProduct(product);
             return Ok();
