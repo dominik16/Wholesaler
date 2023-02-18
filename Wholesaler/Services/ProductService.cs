@@ -45,11 +45,10 @@ namespace Wholesaler.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateProduct(int id, Product product)
+        public async Task UpdateProduct(int id, CreateProductDto product)
         {
             var updateProduct = await _context.Products.FirstAsync(prd => prd.Id == id);
 
-            updateProduct.Id = product.Id;
             updateProduct.Name = product.Name;
             updateProduct.Description = product.Description;
             updateProduct.Unit = product.Unit;

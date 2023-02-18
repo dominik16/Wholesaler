@@ -42,7 +42,7 @@ namespace Wholesaler.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateStorage(int id, Storage storage)
+        public async Task<IActionResult> UpdateStorage(int id, CreateStorageDto storage)
         {
             if (!await _service.CheckStorageExist(id))
             {

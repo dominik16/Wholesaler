@@ -8,7 +8,7 @@ namespace Wholesaler.Services
         Task<List<Storage>> GetAllStorages();
         Task<Storage> GetSingleStorage(int id);
         Task AddStorage(CreateStorageDto storage);
-        Task UpdateStorage(int id, Storage storage);
+        Task UpdateStorage(int id, CreateStorageDto storage);
         Task DeleteStorage(int id);
         Task<bool> CheckStorageExist(int id);
     }

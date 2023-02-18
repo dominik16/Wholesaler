@@ -41,16 +41,14 @@ namespace Wholesaler.Services
             return await _context.Storages.FirstAsync(st => st.Id == id); 
         }
 
-        public async Task UpdateStorage(int id, Storage storage)
+        public async Task UpdateStorage(int id, CreateStorageDto storage)
         {
             var updateStorage = _context.Storages.First(st => st.Id == id);
 
-            updateStorage.Id = storage.Id;
             updateStorage.Name = storage.Name;
             updateStorage.Address = storage.Address;
             updateStorage.City = storage.City;
             updateStorage.Type = storage.Type;
-            updateStorage.Products = storage.Products;
 
             _context.Storages.Update(updateStorage);
             await _context.SaveChangesAsync();

@@ -44,7 +44,7 @@ namespace Wholesaler.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult<Product>> UpdateProduct(int id, Product request)
+        public async Task<ActionResult<Product>> UpdateProduct(int id, CreateProductDto request)
         {
             if (!await _productService.CheckProductExists(id))
             {
