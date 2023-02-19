@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using NLog.Web;
 using Wholesaler.Data;
+using Wholesaler.Middelware;
 using Wholesaler.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,8 +13,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Nlog
+builder.WebHost.UseNLog();
+
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IStorageService, StorageService>();
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDbContext<DataContext>(options =>
@@ -28,6 +35,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
