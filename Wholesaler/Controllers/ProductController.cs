@@ -38,6 +38,11 @@ namespace Wholesaler.Controllers
         [HttpPost] 
         public async Task<IActionResult> AddProduct(CreateProductDto product)
         {
+            if(!await _productService.CheckStorageExist(product.StorageId))
+            {
+                return BadRequest($"Erro while adding product, storage with id: {product.StorageId} doesn't exist");
+            }
+
             await _productService.AddProduct(product);
             return Ok();
         }
@@ -49,6 +54,11 @@ namespace Wholesaler.Controllers
             if (!await _productService.CheckProductExists(id))
             {
                 return NotFound($"Product with id {id} does not exist");
+            }
+
+            if (!await _productService.CheckStorageExist(request.StorageId))
+            {
+                return BadRequest($"Erro while adding product, storage with id: {request.StorageId} doesn't exist");
             }
 
             await _productService.UpdateProduct(id, request);

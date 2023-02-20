@@ -61,5 +61,11 @@ namespace Wholesaler.Services
             var check = _context.Products.Where(prd => prd.Id == id);
             return await check.AnyAsync();
         }
+
+        public async Task<bool> CheckStorageExist(int id)
+        {
+            var check = _context.Storages.Where(st => st.Id == id);
+            return await check.AnyAsync();
+        }
     }
 }

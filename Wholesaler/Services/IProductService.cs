@@ -11,5 +11,6 @@ namespace Wholesaler.Services
         Task UpdateProduct(int id, CreateProductDto product);
         Task DeleteProduct(int id);
         Task<bool> CheckProductExists(int id);
+        Task<bool> CheckStorageExist(int id);
     }
 }
