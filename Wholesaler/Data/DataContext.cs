@@ -27,15 +27,40 @@ namespace Wholesaler.Data
              new Storage { Id = 3, Name = "Magazyn Niezadaszony", Address = "Słoneczna 2", City = "Gdańsk", Type = "Hurtowy" }
             );
 
+            modelBuilder.Entity<Role>().HasData(
+             new Storage { Id = 1, Name = "User" },
+             new Storage { Id = 2, Name = "Manager" },
+             new Storage { Id = 3, Name = "Admin"}
+            );
+
             modelBuilder.Entity<Product>()
             .HasKey(p => p.Id);
 
             modelBuilder.Entity<Storage>()
             .HasKey(st => st.Id);
+
+            modelBuilder.Entity<User>()
+            .HasKey(u => u.Id);
+
+            modelBuilder.Entity<Role>()
+            .HasKey(r => r.Id);
+
+            modelBuilder.Entity<User>(us =>
+            {
+                us.Property(u => u.Email).IsRequired();
+                us.Property(u => u.PasswordHash).IsRequired();
+            });
+
+            modelBuilder.Entity<Role>()
+                .Property(r => r.Name).IsRequired();
         }
 
         public DbSet<Product> Products { get; set; }
 
         public DbSet<Storage> Storages { get; set; }
+
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<Role> Roles { get; set; }
     }
 }

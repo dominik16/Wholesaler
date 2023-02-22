@@ -101,6 +101,40 @@ namespace Wholesaler.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Wholesaler.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "User"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Manager"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Admin"
+                        });
+                });
+
             modelBuilder.Entity("Wholesaler.Models.Storage", b =>
                 {
                     b.Property<int>("Id")
@@ -156,6 +190,40 @@ namespace Wholesaler.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Wholesaler.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("Wholesaler.Models.Product", b =>
                 {
                     b.HasOne("Wholesaler.Models.Storage", "Storage")
@@ -165,6 +233,17 @@ namespace Wholesaler.Migrations
                         .IsRequired();
 
                     b.Navigation("Storage");
+                });
+
+            modelBuilder.Entity("Wholesaler.Models.User", b =>
+                {
+                    b.HasOne("Wholesaler.Models.Role", "role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("role");
                 });
 
             modelBuilder.Entity("Wholesaler.Models.Storage", b =>

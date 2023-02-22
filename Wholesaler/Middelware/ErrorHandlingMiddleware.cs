@@ -1,4 +1,6 @@
-﻿namespace Wholesaler.Middelware
+﻿using Wholesaler.Exceptions;
+
+namespace Wholesaler.Middelware
 {
     public class ErrorHandlingMiddleware : IMiddleware
     {
@@ -14,6 +16,11 @@
             try
             {
                 await next.Invoke(context);
+            }
+            catch(BadRequestException badRequest)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(badRequest.Message);
             }
             catch (Exception ex)
             {

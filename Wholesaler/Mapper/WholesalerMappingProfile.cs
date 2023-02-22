@@ -11,6 +11,8 @@ namespace Wholesaler.Mapper
             CreateMap<CreateProductDto, Product>();
 
             CreateMap<CreateStorageDto, Storage>();
+
+            CreateMap<CreateUserDto, User>();
         }
     }
 }
