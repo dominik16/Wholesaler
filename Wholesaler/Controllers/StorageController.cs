@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Wholesaler.DataTransferObject;
 using Wholesaler.Models;
@@ -8,6 +9,7 @@ namespace Wholesaler.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class StorageController : ControllerBase
     {
         private readonly IStorageService _service;
@@ -35,6 +37,7 @@ namespace Wholesaler.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> AddStorage(CreateStorageDto storage)
         {
             await _service.AddStorage(storage);
@@ -42,6 +45,7 @@ namespace Wholesaler.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> UpdateStorage(int id, CreateStorageDto storage)
         {
             if (!await _service.CheckStorageExist(id))
@@ -53,7 +57,8 @@ namespace Wholesaler.Controllers
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> DeleteStorage(int id)
         {
             if (!await _service.CheckStorageExist(id))

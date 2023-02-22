@@ -13,6 +13,8 @@ namespace Wholesaler.Mapper
             CreateMap<CreateStorageDto, Storage>();
 
             CreateMap<CreateUserDto, User>();
+
+            CreateMap<User, UserDto>();
         }
     }
 }

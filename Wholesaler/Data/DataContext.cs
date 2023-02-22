@@ -28,9 +28,9 @@ namespace Wholesaler.Data
             );
 
             modelBuilder.Entity<Role>().HasData(
-             new Storage { Id = 1, Name = "User" },
-             new Storage { Id = 2, Name = "Manager" },
-             new Storage { Id = 3, Name = "Admin"}
+             new Role { Id = 1, Name = "User" },
+             new Role { Id = 2, Name = "Manager" },
+             new Role { Id = 3, Name = "Admin"}
             );
 
             modelBuilder.Entity<Product>()
