@@ -5,7 +5,7 @@ namespace Wholesaler.Services
 {
     public interface IProductService
     {
-        Task<List<Product>> GetAllProducts();
+        Task<PagedResult<Product>> GetAllProducts(ProductQuery? searchPhrase);
         Task<Product?> GetSingleProduct(int id);
         Task AddProduct(CreateProductDto product);
         Task UpdateProduct(int id, CreateProductDto product);

@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using System.Linq;
+using System.Linq.Expressions;
 using Wholesaler.Data;
 using Wholesaler.DataTransferObject;
 using Wholesaler.Models;
@@ -24,10 +27,39 @@ namespace Wholesaler.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Product>> GetAllProducts()
+        public async Task<PagedResult<Product>> GetAllProducts(ProductQuery? query)
         {
-            var products = await _context.Products.ToListAsync();
-            return products;
+            var baseQueryToList = await _context.Products.ToListAsync();
+
+            var baseQuery = baseQueryToList.Where(pr => query.SearchPhrase == null || (pr.Name.ToLower().Contains(query.SearchPhrase.ToLower())
+                                                || pr.Description.ToLower().Contains(query.SearchPhrase.ToLower())));
+
+            //if (string.IsNullOrEmpty(query.SortBy))
+            //{
+            //    var columnsSelectors = new Dictionary<string, Expression<Func<Product, object>>>()
+            //    {
+            //        { nameof(Product.Name), pr => pr.Name },
+            //        { nameof(Product.Price), pr => pr.Price }
+            //    };
+
+            //    var selectedColumn = columnsSelectors[query.SortBy];
+
+            //    baseQuery = query.SortDirection == SortDirection.ASC
+            //        ? baseQuery.OrderBy(selectedColumn)
+            //        : baseQuery.OrderByDescending(selectedColumn)
+            //        .ToList();
+            //}
+
+            var products = baseQuery
+                .Skip(query.PageSize * (query.PageNumber - 1))
+                .Take(query.PageSize)
+                .ToList();
+
+            var totalItemsCount = baseQuery.Count();
+
+            var result = new PagedResult<Product>(products, totalItemsCount, query.PageSize, query.PageNumber);
+
+            return result;
         }
 
         public async Task<Product?> GetSingleProduct(int id)

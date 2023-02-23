@@ -20,9 +20,9 @@ namespace Wholesaler.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetAllProducts()
+        public async Task<ActionResult<PagedResult<Product>>> GetAllProducts([FromQuery] ProductQuery? query)
         {
-            return await _productService.GetAllProducts();
+            return await _productService.GetAllProducts(query);
         }
 
         [HttpGet]
