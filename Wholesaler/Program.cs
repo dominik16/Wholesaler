@@ -54,7 +54,7 @@ builder.Services.AddScoped<IManageService, ManageService>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<CreateUserDto>, RegisterUserDtoValidator>();
-builder.Services.AddScoped<IValidator<ProductQuery>,ProductQueryValidator>();
+builder.Services.AddScoped<IValidator<ProductQuery>, ProductQueryValidator>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -63,7 +63,17 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontEdnClient", policy =>
+    {
+        policy.AllowAnyMethod().AllowAnyHeader().WithOrigins(builder.Configuration["AllowedOrigins"]);
+    });
+});
+
 var app = builder.Build();
+
+app.UseCors("FrontEndClient");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
