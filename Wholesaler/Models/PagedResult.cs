@@ -1,4 +1,4 @@
-﻿namespace Wholesaler.Models
+﻿namespace Wholesaler.DataTransferObject
 {
     public class PagedResult<T>
     {
@@ -14,7 +14,7 @@
             TotalItemsCount = totalCount;
             ItemFrom = pageSize * (pageNumber - 1) + 1;
             ItemTo = ItemFrom + pageSize - 1;
-            TotalPages = (int)Math.Ceiling(totalCount /(double) pageSize);
+            TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
         }
     }
 }

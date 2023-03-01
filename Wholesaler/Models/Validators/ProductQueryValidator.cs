@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Wholesaler.Models;
 
 namespace Wholesaler.DataTransferObject.Validators
 {

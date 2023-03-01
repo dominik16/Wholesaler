@@ -1,4 +1,4 @@
-﻿namespace Wholesaler.Models
+﻿namespace Wholesaler.DataTransferObject
 {
     public class AuthSettings
     {
