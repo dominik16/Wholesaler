@@ -455,8 +455,5 @@ $RECYCLE.BIN/
 
 .vscode/
 
-#Docker Image Database datas
-WholesalerDb/postgres-data
-
 #Entity Framework Migrations
 Wholesaler/Migrations
