@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Wholesaler.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/users")]
     [ApiController]
     [Authorize(Roles = "Admin,Manager")]
     public class ManageUserController : ControllerBase

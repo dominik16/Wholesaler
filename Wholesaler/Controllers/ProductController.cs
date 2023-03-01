@@ -7,7 +7,7 @@ using Wholesaler.Services;
 
 namespace Wholesaler.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/products")]
     [ApiController]
     [Authorize]
     public class ProductController : ControllerBase

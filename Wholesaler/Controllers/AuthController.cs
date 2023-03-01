@@ -7,7 +7,7 @@ using Wholesaler.Services;
 
 namespace Wholesaler.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/auth")]
     [ApiController]
     [AllowAnonymous]
     public class AuthController : ControllerBase

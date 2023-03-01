@@ -7,7 +7,7 @@ using Wholesaler.Services;
 
 namespace Wholesaler.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/storages")]
     [ApiController]
     [Authorize]
     public class StorageController : ControllerBase
