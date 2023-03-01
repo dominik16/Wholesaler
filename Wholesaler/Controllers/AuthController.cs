@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 using Wholesaler.DataTransferObject;
 using Wholesaler.Services;
 
@@ -19,14 +20,14 @@ namespace Wholesaler.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser(CreateUserDto userDto)
+        public async Task<IActionResult> RegisterUser([FromBody] CreateUserDto userDto)
         {
             await _authService.RegisterUser(userDto);
             return Ok();
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> LoginUser(LoginUserDto userDto)
+        public async Task<IActionResult> LoginUser([FromBody] LoginUserDto userDto)
         {
             if(!await _authService.CheckUserExists(userDto))
             {

@@ -26,14 +26,14 @@ namespace Wholesaler.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers(int id)
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers([FromQuery] int id)
         {
             return Ok(await _service.GetUser(id));
         }
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser([FromQuery] int id)
         {
             if(!await _service.CheckExistsUser(id))
             {
@@ -46,7 +46,7 @@ namespace Wholesaler.Controllers
 
         [HttpPut]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> ChangeUserRole(int userId, int roleId)
+        public async Task<IActionResult> ChangeUserRole([FromQuery] int userId, [FromQuery] int roleId)
         {
             if (!await _service.CheckExistsUser(userId))
             {

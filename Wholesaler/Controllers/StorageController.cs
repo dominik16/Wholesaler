@@ -26,7 +26,7 @@ namespace Wholesaler.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetStorage(int id)
+        public async Task<IActionResult> GetStorage([FromQuery] int id)
         {
             if(!await _service.CheckStorageExist(id))
             {
@@ -38,7 +38,7 @@ namespace Wholesaler.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<IActionResult> AddStorage(CreateStorageDto storage)
+        public async Task<IActionResult> AddStorage([FromBody] CreateStorageDto storage)
         {
             await _service.AddStorage(storage);
             return Ok();
@@ -46,7 +46,7 @@ namespace Wholesaler.Controllers
 
         [HttpPut]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<IActionResult> UpdateStorage(int id, CreateStorageDto storage)
+        public async Task<IActionResult> UpdateStorage([FromQuery] int id, [FromBody] CreateStorageDto storage)
         {
             if (!await _service.CheckStorageExist(id))
             {
@@ -59,7 +59,7 @@ namespace Wholesaler.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<IActionResult> DeleteStorage(int id)
+        public async Task<IActionResult> DeleteStorage([FromQuery] int id)
         {
             if (!await _service.CheckStorageExist(id))
             {

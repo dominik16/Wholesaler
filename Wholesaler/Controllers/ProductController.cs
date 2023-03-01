@@ -27,7 +27,7 @@ namespace Wholesaler.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetSingleProduct(int id)
+        public async Task<IActionResult> GetSingleProduct([FromQuery] int id)
         {
             if (!await _productService.CheckProductExists(id))
             {
@@ -38,7 +38,7 @@ namespace Wholesaler.Controllers
         }
 
         [HttpPost] 
-        public async Task<IActionResult> AddProduct(CreateProductDto product)
+        public async Task<IActionResult> AddProduct([FromBody] CreateProductDto product)
         {
             if(!await _productService.CheckStorageExist(product.StorageId))
             {
@@ -51,7 +51,7 @@ namespace Wholesaler.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult<Product>> UpdateProduct(int id, CreateProductDto request)
+        public async Task<ActionResult<Product>> UpdateProduct([FromQuery] int id, [FromBody] CreateProductDto request)
         {
             if (!await _productService.CheckProductExists(id))
             {
@@ -69,7 +69,7 @@ namespace Wholesaler.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<ActionResult<Product>> DeleteProduct(int id)
+        public async Task<ActionResult<Product>> DeleteProduct([FromQuery] int id)
         {
             if (!await _productService.CheckProductExists(id))
             {
