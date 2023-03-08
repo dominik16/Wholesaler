@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
+using Wholesaler.Data;
 
 namespace Wholesaler.IntegrationTests
 {
@@ -10,7 +12,17 @@ namespace Wholesaler.IntegrationTests
         public ManageUserControllersTests()
         {
             var factory = new WebApplicationFactory<Program>();
-            _client = factory.CreateClient();
+            _client = factory.WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureServices(services =>
+                {
+                    var dbContextOptions = services.SingleOrDefault(service => service.ServiceType == typeof(DbContextOptions<DataContext>));
+
+                    services.Remove(dbContextOptions);
+
+                    services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("WholesalerDb"));
+                });
+            }).CreateClient();
         }
 
         [Fact]
