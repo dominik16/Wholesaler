@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wholesaler", "Wholesaler.csproj", "{693C963B-5978-4126-9552-9CE313B1B1F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wholesaler", "Wholesaler.csproj", "{693C963B-5978-4126-9552-9CE313B1B1F1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wholesaler.IntegrationTests", "..\Wholesaler.IntegrationTests\Wholesaler.IntegrationTests.csproj", "{D8D89C97-F984-4C13-96C5-6DB7F324EB78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{693C963B-5978-4126-9552-9CE313B1B1F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{693C963B-5978-4126-9552-9CE313B1B1F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{693C963B-5978-4126-9552-9CE313B1B1F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8D89C97-F984-4C13-96C5-6DB7F324EB78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8D89C97-F984-4C13-96C5-6DB7F324EB78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8D89C97-F984-4C13-96C5-6DB7F324EB78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8D89C97-F984-4C13-96C5-6DB7F324EB78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

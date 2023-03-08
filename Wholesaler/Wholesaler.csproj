@@ -25,4 +25,8 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="Wholesaler.IntegrationTests" />
+  </ItemGroup>
+
 </Project>

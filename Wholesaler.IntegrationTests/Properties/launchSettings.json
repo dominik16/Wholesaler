@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Wholesaler.IntegrationTests": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:52271;http://localhost:52272"
+    }
+  }
+}
