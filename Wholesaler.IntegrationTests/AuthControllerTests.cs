@@ -9,11 +9,11 @@ using Wholesaler.DataTransferObject;
 
 namespace Wholesaler.IntegrationTests
 {
-    public class StorageControllerTests
+    public class AuthControllerTests
     {
         private HttpClient _client;
 
-        public StorageControllerTests()
+        public AuthControllerTests()
         {
             var factory = new WebApplicationFactory<Program>();
             _client = factory.WithWebHostBuilder(builder =>
@@ -33,31 +33,22 @@ namespace Wholesaler.IntegrationTests
         }
 
         [Fact]
-        public async Task GetAllStorages_WithNoParameters_ReturnOkStatus()
+        public async Task AddUser_WithValidModel_ReturnOkStatus()
         {
-            //act
-            var response = await _client.GetAsync("/api/v1/storages");
-
-            //assert
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        }
-
-        [Fact]
-        public async Task AddStorage_WithValidModel_ReturnOkStatus()
-        {
-            var model = new CreateStorageDto()
+            var model = new CreateUserDto()
             {
-                Name= "Test Storage",
-                Address = "Test Address",
-                City = "Test City",
-                Type = "Test Type"
+                Email = "test@test.com",
+                FirstName = "Test FirstName",
+                LastName = "Test LastName",
+                Password = "Test Password",
+                ConfirmPassword = "Test Password"
             };
 
             var jsonModel = JsonConvert.SerializeObject(model);
 
             var httpContent = new StringContent(jsonModel, UnicodeEncoding.UTF8, "application/json");
 
-            var response = await _client.PostAsync("/api/v1/storages", httpContent);
+            var response = await _client.PostAsync("/api/v1/auth/register", httpContent);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization.Policy;
-using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Net;
@@ -7,13 +6,13 @@ using System.Text;
 using Wholesaler.Data;
 using Wholesaler.DataTransferObject;
 
-namespace Wholesaler.IntegrationTests
+namespace Wholesaler.IntegrationTests.NonAuth
 {
-    public class StorageControllerTests
+    public class StorageControllerNonAuth
     {
         private HttpClient _client;
 
-        public StorageControllerTests()
+        public StorageControllerNonAuth()
         {
             var factory = new WebApplicationFactory<Program>();
             _client = factory.WithWebHostBuilder(builder =>
@@ -24,30 +23,27 @@ namespace Wholesaler.IntegrationTests
 
                     services.Remove(dbContextOptions);
 
-                    services.AddSingleton<IPolicyEvaluator, FakePolicyEvaluator>();
-                    services.AddMvc(option => option.Filters.Add(new FakeuserFilter()));
-
                     services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("WholesalerDb"));
                 });
             }).CreateClient();
         }
 
         [Fact]
-        public async Task GetAllStorages_WithNoParameters_ReturnOkStatus()
+        public async Task GetUnauthorizedStatus_WithUri_ReturnUnauthorizedStatus()
         {
             //act
             var response = await _client.GetAsync("/api/v1/storages");
 
             //assert
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
         [Fact]
-        public async Task AddStorage_WithValidModel_ReturnOkStatus()
+        public async Task AddStorage_WithValidModel_ReturnUnauthorizedStatus()
         {
             var model = new CreateStorageDto()
             {
-                Name= "Test Storage",
+                Name = "Test Storage",
                 Address = "Test Address",
                 City = "Test City",
                 Type = "Test Type"
@@ -59,7 +55,7 @@ namespace Wholesaler.IntegrationTests
 
             var response = await _client.PostAsync("/api/v1/storages", httpContent);
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         }
     }
 }
