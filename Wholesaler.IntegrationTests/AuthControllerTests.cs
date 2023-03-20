@@ -25,9 +25,6 @@ namespace Wholesaler.IntegrationTests
 
                     services.Remove(dbContextOptions);
 
-                    services.AddSingleton<IPolicyEvaluator, FakePolicyEvaluator>();
-                    services.AddMvc(option => option.Filters.Add(new FakeuserFilter()));
-
                     services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("WholesalerDb"));
                 });
             });
@@ -41,8 +38,6 @@ namespace Wholesaler.IntegrationTests
             var model = new CreateUserDto()
             {
                 Email = "test@test.com",
-                FirstName = "Test FirstName",
-                LastName = "Test LastName",
                 Password = "Test Password",
                 ConfirmPassword = "Test Password"
             };
@@ -54,6 +49,25 @@ namespace Wholesaler.IntegrationTests
             var response = await _client.PostAsync("/api/v1/auth/register", httpContent);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task AddUser_WithWrongModel_ReturnBadRequest()
+        {
+            var model = new CreateUserDto()
+            {
+                Email = "It's not an email",
+                Password = "Test Password",
+                ConfirmPassword = "Test Password"
+            };
+
+            var jsonModel = JsonConvert.SerializeObject(model);
+
+            var httpContent = new StringContent(jsonModel, UnicodeEncoding.UTF8, "application/json");
+
+            var response = await _client.PostAsync("/api/v1/auth/register", httpContent);
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
     }
 }
