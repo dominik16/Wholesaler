@@ -6,17 +6,19 @@ using System.Net;
 using System.Text;
 using Wholesaler.Data;
 using Wholesaler.DataTransferObject;
+using Wholesaler.Models;
 
 namespace Wholesaler.IntegrationTests
 {
     public class ProductControllerTests
     {
         private HttpClient _client;
+        private WebApplicationFactory<Program> _factory;
 
         public ProductControllerTests()
         {
             var factory = new WebApplicationFactory<Program>();
-            _client = factory.WithWebHostBuilder(builder =>
+            _factory = factory.WithWebHostBuilder(builder =>
             {
                 builder.ConfigureServices(services =>
                 {
@@ -29,7 +31,9 @@ namespace Wholesaler.IntegrationTests
 
                     services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("WholesalerDb"));
                 });
-            }).CreateClient();
+            });
+
+            _client = _factory.CreateClient();
         }
 
         [Theory]
@@ -51,7 +55,7 @@ namespace Wholesaler.IntegrationTests
             var model = new CreateProductDto()
             {
                 Name = "Test Storage",
-                Description= "Test Description",
+                Description = "Test Description",
                 Unit = "Test Unit",
                 Price = 10,
                 StorageId = 1
@@ -63,6 +67,41 @@ namespace Wholesaler.IntegrationTests
 
             var response = await _client.PostAsync("/api/v1/storages", httpContent);
 
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteProduct_ForNonExistingProduct_ReturnNotFound()
+        {
+            //act 
+            var response = await _client.DeleteAsync("/api/v1/products/999");
+
+            //assert 
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteProduct_ForExistingProduct_ReturnOkStatus()
+        {
+            //arrange
+            var product = new Product()
+            {
+                Id = 1,
+                Name = "Test Product"
+            };
+
+            // seed
+            var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
+            using var scope = scopeFactory.CreateScope();
+            var _dbContext = scope.ServiceProvider.GetService<DataContext>();
+
+            _dbContext.Products.Add(product);
+            _dbContext.SaveChanges();
+
+            //act 
+            var response = await _client.DeleteAsync("/api/v1/products/" + product.Id);
+
+            //assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }

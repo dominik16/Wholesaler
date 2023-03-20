@@ -12,11 +12,12 @@ namespace Wholesaler.IntegrationTests
     public class AuthControllerTests
     {
         private HttpClient _client;
+        private WebApplicationFactory<Program> _factory;
 
         public AuthControllerTests()
         {
             var factory = new WebApplicationFactory<Program>();
-            _client = factory.WithWebHostBuilder(builder =>
+            _factory = factory.WithWebHostBuilder(builder =>
             {
                 builder.ConfigureServices(services =>
                 {
@@ -29,7 +30,9 @@ namespace Wholesaler.IntegrationTests
 
                     services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("WholesalerDb"));
                 });
-            }).CreateClient();
+            });
+
+            _client = _factory.CreateClient();
         }
 
         [Fact]
