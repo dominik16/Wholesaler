@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
 using Wholesaler.Data;
 using Wholesaler.DataTransferObject;
 using Wholesaler.Models;
+using Wholesaler.Services;
+using Xunit.Sdk;
 
 namespace Wholesaler.IntegrationTests
 {
